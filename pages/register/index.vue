@@ -127,8 +127,8 @@ import NotificationErrorRegister from '../../components/NotificationErrorRegiste
 export default defineComponent({
   setup() {
     const state = reactive({
-      username: "allipio",
-      email: "allipio@gmail.com",
+      username: "",
+      email: "",
       password: "",
       confirmation: "",
       hasVisiblePassword: false,
