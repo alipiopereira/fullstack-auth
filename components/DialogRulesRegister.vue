@@ -38,7 +38,7 @@
                 <vs-button danger icon class="pm-0"><i class="bx bx-hide"></i></vs-button>
               </vs-col>
               <vs-col w="10">
-                <p class="font-size-9">Password: Pode fazer uso tanto de letras como de números | Mínimo de caracteres 6 | Mínimo de caracteres 10</p>
+                <p class="font-size-9">Password: Pode fazer uso tanto de letras como de números | Mínimo de caracteres 6 | Mínimo de caracteres 10 | Confirme sua senha</p>
               </vs-col>
             </vs-row>
           </vs-col>

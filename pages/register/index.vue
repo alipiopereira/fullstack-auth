@@ -19,7 +19,7 @@
         </vs-row>
 
         <vs-row justify="center" align="center" class="mt-5">
-          <vs-col w="3" xs="6" sm="4" align="center" class="pa-1">
+          <vs-col w="4" xs="6" sm="4" md="6" align="center" class="pa-1">
             <vs-card type="4" class="card">
               <template #title>
                 <h6>Username</h6>
@@ -42,6 +42,7 @@
             w="6"
             xs="12"
             sm="8"
+            md="6"
             justify="center"
             align="center"
             class="pa-1"
@@ -89,6 +90,22 @@
               </template>
             </vs-input>
 
+            <vs-input
+              type="password"
+              name="password_confirmation"
+              placeholder="Confirm your password"
+              v-model="state.confirmation"
+              v-validate="`${'required|is:' + state.password}`"
+              :visiblePassword="state.hasVisiblePassword"
+              @click-icon="state.hasVisiblePassword = !state.hasVisiblePassword"
+              class="mt-1"
+            >
+              <template #icon>
+                <i v-if="state.hasVisiblePassword" class="bx bx-show-alt"></i>
+                <i v-else class="bx bx-hide"></i>
+              </template>
+            </vs-input>
+
             <vs-button block class="pm-0" @click="onSubmit">Register</vs-button>
           </vs-col>
         </vs-row>
@@ -110,9 +127,10 @@ import NotificationErrorRegister from '../../components/NotificationErrorRegiste
 export default defineComponent({
   setup() {
     const state = reactive({
-      username: "",
-      email: "",
+      username: "allipio",
+      email: "allipio@gmail.com",
       password: "",
+      confirmation: "",
       hasVisiblePassword: false,
       countError: 0
     });
@@ -134,6 +152,7 @@ export default defineComponent({
         let router = this.router;
         router.push(`${"/" + this.state.username}`);
       } else if (countError >= 3) {
+        console.log(this.$validator.errors)
         this.$vs.notification({
           color: "danger",
           duration: "none",
@@ -141,6 +160,7 @@ export default defineComponent({
         });
       }
       else {
+        console.log(this.$validator.errors)
         this.$vs.notification({
           color: "danger",
           title: "😕 Opa!",
@@ -160,10 +180,16 @@ export default defineComponent({
 }
 
 .vs-card {
-  width: 155px;
+  width: 195px;
 }
 
 .vs-card__text {
   width: 100%;
+}
+
+@media (max-width: 550px) {
+  .vs-card {
+  width: 145px;
+}
 }
 </style>
