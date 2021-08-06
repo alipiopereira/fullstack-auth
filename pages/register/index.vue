@@ -51,7 +51,7 @@
               type="text"
               name="username"
               placeholder="Username"
-              v-model="state.username"
+              v-model="state.register.username"
               v-validate="'required|min:3|max:20'"
               @click-icon=""
             >
@@ -64,7 +64,7 @@
               type="email"
               name="email"
               placeholder="Email"
-              v-model="state.email"
+              v-model="state.register.email"
               v-validate="'required|email'"
               @click-icon=""
               class="mt-1"
@@ -78,7 +78,7 @@
               type="password"
               name="password"
               placeholder="Password"
-              v-model="state.password"
+              v-model="state.register.password"
               v-validate="'required|min:6|max:10'"
               :visiblePassword="state.hasVisiblePassword"
               @click-icon="state.hasVisiblePassword = !state.hasVisiblePassword"
@@ -94,8 +94,8 @@
               type="password"
               name="password_confirmation"
               placeholder="Confirm your password"
-              v-model="state.confirmation"
-              v-validate="`${'required|is:' + state.password}`"
+              v-model="state.register.confirmation"
+              v-validate="`${'required|is:' + state.register.password}`"
               :visiblePassword="state.hasVisiblePassword"
               @click-icon="state.hasVisiblePassword = !state.hasVisiblePassword"
               class="mt-1"
@@ -106,7 +106,7 @@
               </template>
             </vs-input>
 
-            <vs-button block class="pm-0" @click="onSubmit">Register</vs-button>
+            <vs-button block class="pm-0" @click="onSubmit(state.register)">Register</vs-button>
           </vs-col>
         </vs-row>
       </vs-col>
@@ -122,17 +122,19 @@ import {
   reactive,
 } from "@nuxtjs/composition-api";
 
-import NotificationErrorRegister from '../../components/NotificationErrorRegister.vue'
+import NotificationErrorRegister from "../../components/NotificationErrorRegister.vue";
 
 export default defineComponent({
   setup() {
     const state = reactive({
-      username: "",
-      email: "",
-      password: "",
-      confirmation: "",
+      register: {
+        username: "",
+        email: "",
+        password: "",
+        confirmation: "",
+      },
       hasVisiblePassword: false,
-      countError: 0
+      countError: 0,
     });
 
     const router = useRouter();
@@ -143,31 +145,31 @@ export default defineComponent({
   },
   head: {},
   methods: {
-    async onSubmit() {
+    async onSubmit(data) {
+      console.log(data)
       let validate = await this.$validator.validateAll();
-      let countError = this.state.countError
+      let countError = this.state.countError;
 
       if (validate) {
-        //console.log("Usuário registrado com sucesso");
-        let router = this.router;
-        router.push(`${"/" + this.state.username}`);
+        console.log("Usuário registrado com sucesso");
+        //let router = this.router;
+        //router.push(`${"/" + this.state.register.username}`);
       } else if (countError >= 3) {
-        console.log(this.$validator.errors)
+        console.log(this.$validator.errors);
         this.$vs.notification({
           color: "danger",
           duration: "none",
-          content: NotificationErrorRegister
+          content: NotificationErrorRegister,
         });
-      }
-      else {
-        console.log(this.$validator.errors)
+      } else {
+        console.log(this.$validator.errors);
         this.$vs.notification({
           color: "danger",
           title: "😕 Opa!",
           text: `Verifique seus dados e tente novamente.`,
         });
-        this.state.countError++
-      } 
+        this.state.countError++;
+      }
     },
   },
 });
@@ -189,7 +191,7 @@ export default defineComponent({
 
 @media (max-width: 550px) {
   .vs-card {
-  width: 145px;
-}
+    width: 145px;
+  }
 }
 </style>

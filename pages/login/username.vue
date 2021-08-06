@@ -50,7 +50,7 @@
               type="text"
               name="username"
               placeholder="Username"
-              v-model="state.username"
+              v-model="state.login.username"
               v-validate="'required|min:3|max:20'"
               @click-icon=""
             >
@@ -63,7 +63,7 @@
               type="password"
               name="password"
               placeholder="Password"
-              v-model="state.password"
+              v-model="state.login.password"
               v-validate="'required|min:6|max:10'"
               :visiblePassword="state.hasVisiblePassword"
               @click-icon="state.hasVisiblePassword = !state.hasVisiblePassword"
@@ -75,7 +75,7 @@
               </template>
             </vs-input>
 
-            <vs-button block class="pm-0" @click="onSubmit"
+            <vs-button block class="pm-0" @click="onSubmit(state.login)"
               >Fazer login</vs-button
             >
             <p class="font-size-9 mt-5">
@@ -96,15 +96,17 @@ import {
   reactive,
 } from "@nuxtjs/composition-api";
 
-import NotificationErrorLogin from '../../components/NotificationErrorLogin.vue'
+import NotificationErrorLogin from "../../components/NotificationErrorLogin.vue";
 
 export default defineComponent({
   setup() {
     const state = reactive({
-      username: "",
-      password: "",
+      login: {
+        username: "",
+        password: "",
+      },
       hasVisiblePassword: false,
-      countError: 0
+      countError: 0,
     });
 
     const router = useRouter();
@@ -115,29 +117,29 @@ export default defineComponent({
   },
   head: {},
   methods: {
-    async onSubmit() {
+    async onSubmit(data) {
+      console.log(data)
       let validate = await this.$validator.validateAll();
-      let countError = this.state.countError
+      let countError = this.state.countError;
 
       if (validate) {
         //console.log("login realizado com sucesso");
         let router = this.router;
-        router.push(`${"/" + this.state.username}`);
+        router.push(`${"/" + this.state.login.username}`);
       } else if (countError >= 3) {
         this.$vs.notification({
           color: "danger",
           duration: "none",
-          content: NotificationErrorLogin
+          content: NotificationErrorLogin,
         });
-      }
-      else {
+      } else {
         this.$vs.notification({
           color: "danger",
           title: "😕 Opa!",
           text: `Verifique seus dados e tente novamente.`,
         });
-        this.state.countError++
-      } 
+        this.state.countError++;
+      }
     },
   },
 });

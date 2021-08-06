@@ -14,10 +14,6 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' },
-      { rel: 'stylesheet', type: 'css', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap'},
-      { rel: 'stylesheet', type: 'css', href: 'https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300&display=swap'},
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
     ]
   },
 
@@ -47,8 +43,35 @@ export default {
   modules: [
     'nuxt-validate',
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
   ],
+
+  axios: {
+    baseURL: 'http://127.0.0.1:3333'
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          //property: 'token',
+          required: false,
+          global:  false
+        },
+
+        user: {
+          property: 'user'
+        },
+
+        endpoints: {
+          login: { url: '/login', method: 'post' },
+          logout: { url: '/logout', method: 'post' },
+          register: { url: '/register', method: 'post' },
+          user: { url: '/profile', method: 'get' }
+        }
+      }
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
