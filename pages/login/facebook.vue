@@ -18,7 +18,7 @@
               <vs-button flat to="/login">
                 <i class="bx bx-left-arrow-alt"></i
               ></vs-button>
-              <vs-button class="px-5" @click="loginWithFacebook">Login</vs-button>
+              <vs-button class="px-5">Login</vs-button>
             </vs-row>
           </vs-col>
         </vs-row>
@@ -42,7 +42,7 @@
               </template>
 
               <template #interactions>
-                <vs-button icon loading></vs-button>
+                <vs-button icon loading  id="btn-loading" @click="loginWithFacebook"></vs-button>
               </template>
             </vs-card>
 
@@ -55,15 +55,18 @@
 </template>
 
 <script>
-import { defineComponent, useRouter, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, useMeta, onMounted } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const router = useRouter()
-
     useMeta({ title: "Login with Facebook" })
 
-    return { router }
+    onMounted(() => {
+      let el = document.getElementById('btn-loading')
+      setTimeout(() => {
+        el.click()
+      }, 2000)
+    })
   },
   head: {},
   methods: {
