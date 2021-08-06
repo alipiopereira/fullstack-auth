@@ -66,7 +66,8 @@ export default defineComponent({
     onMounted(() => {
       //simulando um time para o login usando Facebbok
       setTimeout(() => {
-        router.push("/allipiopereira")
+        this.$auth.loginWith('google')
+        //router.push("/allipiopereira")
       }, 2000)
     })
   },

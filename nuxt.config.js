@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'FullStackBeta Auth',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'pt-br'
     },
     meta: [
       { charset: 'utf-8' },
@@ -24,7 +24,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-      { src: '~plugins/vuesax.js' },
+    { src: '~plugins/vuesax.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -43,41 +43,34 @@ export default {
   modules: [
     'nuxt-validate',
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
   ],
 
   axios: {
-    baseURL: 'http://127.0.0.1:3333'
-  },
-
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          //property: 'token',
-          required: false,
-          global:  false
-        },
-
-        user: {
-          property: 'user'
-        },
-
-        endpoints: {
-          login: { url: '/login', method: 'post' },
-          logout: { url: '/logout', method: 'post' },
-          register: { url: '/register', method: 'post' },
-          user: { url: '/profile', method: 'get' }
-        }
+    baseURL: 'http://localhost:3333',
+    headers: {
+      common: {
+        Accept: 'Access-Control-Allow-Origin',
       }
     }
   },
 
+  auth: {
+    strategies: {
+      facebook: {
+        endpoints: {
+          userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}'
+        },
+        clientId: '588145119263555',
+        scope: ['public_profile', 'email']
+      },
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
 
   generate: {
     interval: 2000,
-  }
+  },
 }

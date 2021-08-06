@@ -18,7 +18,7 @@
               <vs-button flat to="/login">
                 <i class="bx bx-left-arrow-alt"></i
               ></vs-button>
-              <vs-button class="px-5">Login</vs-button>
+              <vs-button class="px-5" @click="loginWithFacebook">Login</vs-button>
             </vs-row>
           </vs-col>
         </vs-row>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { defineComponent, useRouter, useMeta,  onMounted } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useMeta } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
@@ -63,13 +63,13 @@ export default defineComponent({
 
     useMeta({ title: "Login with Facebook" })
 
-    onMounted(() => {
-      //simulando um time para o login usando Facebbok
-      setTimeout(() => {
-        router.push("/allipiopereira")
-      }, 2000)
-    })
+    return { router }
   },
-  head: {}
+  head: {},
+  methods: {
+    loginWithFacebook() {
+      this.$auth.loginWith('facebook')
+    }
+  }
 })
 </script>

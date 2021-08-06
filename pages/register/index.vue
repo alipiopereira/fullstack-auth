@@ -128,10 +128,10 @@ export default defineComponent({
   setup() {
     const state = reactive({
       register: {
-        username: "",
-        email: "",
-        password: "",
-        confirmation: "",
+        username: "cruz",
+        email: "cruz@gmail.com",
+        password: "123456",
+        confirmation: "123456",
       },
       hasVisiblePassword: false,
       countError: 0,
@@ -146,14 +146,19 @@ export default defineComponent({
   head: {},
   methods: {
     async onSubmit(data) {
-      console.log(data)
+      //console.log(data)
       let validate = await this.$validator.validateAll();
       let countError = this.state.countError;
 
       if (validate) {
-        console.log("Usuário registrado com sucesso");
+        //console.log("Usuário registrado com sucesso");
         //let router = this.router;
         //router.push(`${"/" + this.state.register.username}`);
+        let response = await this.$axios.post('/register', data)
+        console.log(response)
+        this.$auth.loginWith('local', {
+          data: data
+        })
       } else if (countError >= 3) {
         console.log(this.$validator.errors);
         this.$vs.notification({

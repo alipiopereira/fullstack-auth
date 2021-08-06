@@ -9,7 +9,7 @@
           </vs-col>
 
           <vs-col w="2" class="mt-5 mt-sm-none"
-            ><vs-button block icon>
+            ><vs-button block icon @click="test">
               Login</vs-button
             >
           </vs-col>
@@ -87,13 +87,21 @@
 </template>
 
 <script>
-import { defineComponent, useMeta } from '@nuxtjs/composition-api'
+import { defineComponent, useMeta, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
+    const store = useStore()
     useMeta({ title: "Login" })
+
+    return { store }
   },
-  head: {}
+  head: {},
+  methods: {
+    test() {
+      this.store.dispatch('authenticated')
+    }
+  }
 })
 </script>
 
