@@ -42,7 +42,7 @@
               </template>
 
               <template #interactions>
-                <vs-button icon loading></vs-button>
+                <vs-button icon loading  id="btn-loading" @click="loginWithGoogle"></vs-button>
               </template>
             </vs-card>
 
@@ -64,13 +64,17 @@ export default defineComponent({
     useMeta({ title: "Login with Google" })
 
     onMounted(() => {
-      //simulando um time para o login usando Facebbok
+      let el = document.getElementById('btn-loading')
       setTimeout(() => {
-        this.$auth.loginWith('google')
-        //router.push("/allipiopereira")
+        el.click()
       }, 2000)
     })
   },
-  head: {}
+  head: {},
+  methods: {
+    loginWithGoogle() {
+      this.$auth.loginWith('google', { params: { prompt: "select_account" } })
+    }
+  }
 })
 </script>

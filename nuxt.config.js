@@ -64,6 +64,13 @@ export default {
         clientId: '588145119263555',
         scope: ['public_profile', 'email']
       },
+      google: {
+        responseType: 'code',
+        codeChallengeMethod: '',
+        grantType: 'authorisation_code',
+        clientId:  '231209895914-kdciht9i3ssaaiqp60h910c2o8v6187g.apps.googleusercontent.com',
+        redirectUri: 'https://fullstackbeta-auth.com',
+      }
     }
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
