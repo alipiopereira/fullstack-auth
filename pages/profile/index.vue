@@ -4,7 +4,7 @@
       <vs-col justify="flex-start" align="flex-start" w="6" sm="10">
         <vs-row>
           <vs-col w="8" xs="8" sm="10">
-            <h1 class="font-size-45 pm-0">{{ $auth.user.name }}</h1>
+            <h1 class="font-size-45 pm-0">allipiopereira vue</h1>
             <h1 class="font-size-45 pm-0">Username</h1>
           </vs-col>
 
@@ -17,7 +17,7 @@
             class="mt-5 mt-sm-none"
           >
             <vs-row justify="flex-end">
-              <vs-button class="px-5" @click="logout">Logout</vs-button>
+              <vs-button class="px-5" @click="$auth.logout()">Logout</vs-button>
             </vs-row>
           </vs-col>
         </vs-row>

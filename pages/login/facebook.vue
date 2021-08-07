@@ -73,6 +73,7 @@ export default defineComponent({
     loginWithFacebook() {
       this.$auth.loginWith('facebook')
     }
-  }
+  },
+  middleware: 'noAuthenticated',
 })
 </script>

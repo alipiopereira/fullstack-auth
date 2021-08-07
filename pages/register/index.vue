@@ -94,7 +94,7 @@
               type="password"
               name="password_confirmation"
               placeholder="Confirm your password"
-              v-model="state.register.confirmation"
+              v-model="state.register.confirmation_password"
               v-validate="`${'required|is:' + state.register.password}`"
               :visiblePassword="state.hasVisiblePassword"
               @click-icon="state.hasVisiblePassword = !state.hasVisiblePassword"
@@ -106,7 +106,9 @@
               </template>
             </vs-input>
 
-            <vs-button block class="pm-0" @click="onSubmit(state.register)">Register</vs-button>
+            <vs-button block class="pm-0" @click="onSubmit(state.register)"
+              >Register</vs-button
+            >
           </vs-col>
         </vs-row>
       </vs-col>
@@ -131,7 +133,7 @@ export default defineComponent({
         username: "cruz",
         email: "cruz@gmail.com",
         password: "123456",
-        confirmation: "123456",
+        confirmation_password: "123456",
       },
       hasVisiblePassword: false,
       countError: 0,
@@ -144,6 +146,7 @@ export default defineComponent({
     return { state, router };
   },
   head: {},
+  middleware: "noAuthenticated",
   methods: {
     async onSubmit(data) {
       //console.log(data)
@@ -153,12 +156,8 @@ export default defineComponent({
       if (validate) {
         //console.log("Usuário registrado com sucesso");
         //let router = this.router;
+        this.register()
         //router.push(`${"/" + this.state.register.username}`);
-        let response = await this.$axios.post('/register', data)
-        console.log(response)
-        this.$auth.loginWith('local', {
-          data: data
-        })
       } else if (countError >= 3) {
         console.log(this.$validator.errors);
         this.$vs.notification({
@@ -174,6 +173,23 @@ export default defineComponent({
           text: `Verifique seus dados e tente novamente.`,
         });
         this.state.countError++;
+      }
+    },
+    async register() {
+      try {
+        console.log("register");
+        console.log(this.state.register);
+
+        await this.$axios.post("/register", this.state.register);
+        //console.log(response)
+
+        await this.$auth.loginWith("local", {
+          data: this.state.register,
+        });
+
+        console.log(this.$auth)
+      } catch (err) {
+        console.log(err);
       }
     },
   },

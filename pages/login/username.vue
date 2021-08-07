@@ -102,8 +102,8 @@ export default defineComponent({
   setup() {
     const state = reactive({
       login: {
-        username: "",
-        password: "",
+        username: "alipio",
+        password: "123456",
       },
       hasVisiblePassword: false,
       countError: 0,
@@ -116,6 +116,7 @@ export default defineComponent({
     return { state, router };
   },
   head: {},
+  middleware: 'noAuthenticated',
   methods: {
     async onSubmit(data) {
       console.log(data)
@@ -124,8 +125,9 @@ export default defineComponent({
 
       if (validate) {
         //console.log("login realizado com sucesso");
-        let router = this.router;
-        router.push(`${"/" + this.state.login.username}`);
+        //let router = this.router;
+        this.login()
+        //router.push(`${"/" + this.state.login.username}`);
       } else if (countError >= 3) {
         this.$vs.notification({
           color: "danger",
@@ -141,6 +143,18 @@ export default defineComponent({
         this.state.countError++;
       }
     },
+
+    async login() {
+      try {
+        console.log('login')        
+        console.log(this.state.login)        
+        await this.$axios.post('/login', this.state.login)
+
+        await this.$auth.loginWith('local', { data: this.state.login })
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
 });
 </script>

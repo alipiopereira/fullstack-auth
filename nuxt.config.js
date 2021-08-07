@@ -48,15 +48,25 @@ export default {
 
   axios: {
     baseURL: 'http://localhost:3333',
-    headers: {
-      common: {
-        Accept: 'Access-Control-Allow-Origin',
-      }
-    }
+    proxy: true,
+    credentials: true,
+    retry: true
   },
 
   auth: {
     strategies: {
+      local: {
+        token: {
+          required: false,
+          type: false
+        },
+        endpoints: {
+          login: { url: '/profile', method: 'post' },
+          logout: { url: '/', method: 'post' },
+          register: { url: '/profile', method: 'post' },
+          user: { url: '/profile', method: 'post', propertName: 'data' }
+        }
+      },
       facebook: {
         endpoints: {
           userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}'
@@ -69,9 +79,15 @@ export default {
         codeChallengeMethod: '',
         grantType: 'authorisation_code',
         clientId:  '231209895914-kdciht9i3ssaaiqp60h910c2o8v6187g.apps.googleusercontent.com',
-        redirectUri: 'https://fullstackbeta-auth.com',
+        redirectUri: 'http://localhost:3000',
       }
     }
+  },
+  redirect: {
+    login: '/profile',
+    logout: '/',
+    callback: false,
+    home: '/'
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

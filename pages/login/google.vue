@@ -74,7 +74,10 @@ export default defineComponent({
   methods: {
     loginWithGoogle() {
       this.$auth.loginWith('google', { params: { prompt: "select_account" } })
+    console.log(this.$auth)
+
     }
-  }
+  },
+  middleware: 'noAuthenticated',
 })
 </script>

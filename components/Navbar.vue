@@ -4,8 +4,9 @@
         <h4>FullStackBeta Auth</h4>
       </template>
       <template #right>
-        <vs-button flat to="/login">Login</vs-button>
-        <vs-button>Get Started</vs-button>
+        <vs-button v-if="$auth.loggedIn" flat @click="$auth.logout()">Logout</vs-button>
+        <vs-button v-else flat to="/login">Login</vs-button>
+        <vs-button to="/profile">Get Started</vs-button>
       </template>
     </vs-navbar>
 </template>
