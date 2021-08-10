@@ -14,6 +14,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' },
+      { rel: 'stylesheet', type: 'css', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap' }
     ]
   },
 
