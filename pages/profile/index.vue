@@ -1,48 +1,54 @@
 <template>
   <div class="center">
     <vs-row justify="center" align="center">
-      <vs-col justify="flex-start" align="flex-start" w="6" sm="10">
-        <vs-row>
-          <vs-col w="8" xs="8" sm="10">
-            <h1 class="font-size-45 pm-0">allipiopereira vue</h1>
-            <h1 class="font-size-45 pm-0">Username</h1>
-          </vs-col>
-
-          <vs-col
-            w="2"
-            xs="4"
-            sm="2"
-            justify="center"
-            align="center"
-            class="mt-5 mt-sm-none"
-          >
-            <vs-row justify="flex-end">
-              <vs-button class="px-5" @click="$auth.logout()">Logout</vs-button>
-            </vs-row>
-          </vs-col>
-        </vs-row>
+      <vs-col justify="center"  w="6" sm="10">
+        <vs-card type="4">
+          <template #title>
+            <h3>Profile</h3>
+          </template>
+          <template #img>
+            <img src="/images/card-profile-logo-project.png" alt="" />
+          </template>
+          <template #text>
+            <span
+              ><h4>Username:</h4>
+              {{ $auth.user.name }}</span
+            >
+            <h4 class="align-start" v-if="$auth.user.email">Email:</h4>
+            {{ $auth.user.email }}
+            <p>Vamos pra cima, avançando juntos nessa caminha...</p>
+          </template>
+          <template #interactions>
+            <vs-button danger icon @click="logout">
+              <i class="bx bx-log-out"></i>
+              Logout
+            </vs-button>
+            <vs-avatar size="35">
+              <img :src="$auth.user.picture" alt="FullStackBeta Auth Logo" />
+            </vs-avatar>
+          </template>
+        </vs-card>
       </vs-col>
     </vs-row>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from "@nuxtjs/composition-api";
 
 export default defineComponent({
   setup() {
     //const route = useRoute()
     //const username = computed(() => route.value.params.profile)
     //useMeta({ title: `${"Profile: " + username.value }` })
-
     //return { username }
   },
   head: {},
   methods: {
-    logout () {
-      this.$auth.logout()
-    }
+    logout() {
+      this.$auth.logout();
+    },
   },
-  middleware: 'authenticated'
-})
+  middleware: "authenticated",
+});
 </script>

@@ -8,12 +8,7 @@
             <h1 class="font-size-45 pm-0">Learn</h1>
           </vs-col>
 
-          <vs-col
-            w="3"
-            justify="center"
-            align="center"
-            class="mt-5 mt-sm-none"
-          >
+          <vs-col w="3" justify="center" align="center" class="mt-5 mt-sm-none">
             <vs-row justify="flex-end">
               <vs-button flat to="/login">
                 <i class="bx bx-left-arrow-alt"></i
@@ -31,10 +26,7 @@
               </template>
 
               <template #img>
-                <img
-                  src="/images/login-google.png"
-                  alt="Login with Google"
-                />
+                <img src="/images/login-google.png" alt="Login with Google" />
               </template>
 
               <template #text style="width: 100% !important">
@@ -42,11 +34,18 @@
               </template>
 
               <template #interactions>
-                <vs-button icon loading  id="btn-loading" @click="loginWithGoogle"></vs-button>
+                <vs-button
+                  icon
+                  loading
+                  id="btn-loading"
+                  @click="loginWithGoogle"
+                ></vs-button>
               </template>
             </vs-card>
 
-            <p class="font-size-9 mt-5">Não tem uma conta? <a href="/register">Criar Conta</a></p>
+            <p class="font-size-9 mt-5">
+              Não tem uma conta? <a href="/register">Criar Conta</a>
+            </p>
           </vs-col>
         </vs-row>
       </vs-col>
@@ -55,29 +54,32 @@
 </template>
 
 <script>
-import { defineComponent, useRouter, useMeta,  onMounted } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRouter,
+  useMeta,
+  onMounted,
+} from "@nuxtjs/composition-api";
 
 export default defineComponent({
   setup() {
-    const router = useRouter()
+    const router = useRouter();
 
-    useMeta({ title: "Login with Google" })
+    useMeta({ title: "Login with Google" });
 
     onMounted(() => {
-      let el = document.getElementById('btn-loading')
+      let el = document.getElementById("btn-loading");
       setTimeout(() => {
-        el.click()
-      }, 2000)
-    })
+        el.click();
+      }, 2000);
+    });
   },
   head: {},
   methods: {
     loginWithGoogle() {
-      this.$auth.loginWith('google', { params: { prompt: "select_account" } })
-    console.log(this.$auth)
-
+      this.$auth.loginWith("google", { params: { prompt: "select_account" } });
     }
   },
-  middleware: 'noAuthenticated',
-})
+  middleware: "noAuthenticated",
+});
 </script>

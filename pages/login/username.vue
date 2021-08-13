@@ -119,7 +119,6 @@ export default defineComponent({
   middleware: 'noAuthenticated',
   methods: {
     async onSubmit(data) {
-      console.log(data)
       let validate = await this.$validator.validateAll();
       let countError = this.state.countError;
 
@@ -146,11 +145,12 @@ export default defineComponent({
 
     async login() {
       try {
-        console.log('login')        
-        console.log(this.state.login)        
-        await this.$axios.post('/login', this.state.login)
-
-        await this.$auth.loginWith('local', { data: this.state.login })
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.state.login.email,
+            password: this.state.login.password,
+          }
+        })
       } catch (err) {
         console.log(err)
       }
